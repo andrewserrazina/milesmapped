@@ -1,3 +1,3 @@
-from app.schemas import user
+from app.schemas import loyalty, search, user
 
-__all__ = ["user"]
+__all__ = ["user", "loyalty", "search"]
