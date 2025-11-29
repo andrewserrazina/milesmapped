@@ -34,6 +34,7 @@ class SearchRequest(TimestampMixin, Base):
     cabin: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     passengers: Mapped[int] = mapped_column(Integer, nullable=False)
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    admin_notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     status: Mapped[SearchStatus] = mapped_column(
         SqlEnum(SearchStatus, name="search_status"),
         nullable=False,

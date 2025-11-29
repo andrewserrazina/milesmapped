@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List
 
-from sqlalchemy import String
+from sqlalchemy import Boolean, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base, TimestampMixin
@@ -16,6 +16,7 @@ class User(TimestampMixin, Base):
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
     full_name: Mapped[str] = mapped_column(String, nullable=False)
     role: Mapped[str] = mapped_column(String, nullable=False, default="user")
+    is_admin: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
 
     search_requests: Mapped[List["SearchRequest"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"

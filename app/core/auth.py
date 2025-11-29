@@ -56,7 +56,7 @@ def get_current_user(
 def get_current_admin(
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> User:
-    if current_user.role not in {"admin", "staff"}:
+    if not getattr(current_user, "is_admin", False) and current_user.role not in {"admin", "staff"}:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough privileges",
