@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from app.api.routes import auth, concierge, health, users
+from app.api.routes import auth, concierge, health, loyalty, users
 
 api_router = APIRouter()
 api_router.include_router(health.router)
 api_router.include_router(users.router)
 api_router.include_router(auth.router)
 api_router.include_router(concierge.router)
+api_router.include_router(loyalty.router)

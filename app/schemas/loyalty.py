@@ -27,7 +27,6 @@ class LoyaltyProgramRead(LoyaltyProgramBase):
 
 
 class UserLoyaltyBalanceBase(BaseModel):
-    user_id: int
     loyalty_program_id: int
     points_balance: int
 
@@ -37,6 +36,7 @@ class UserLoyaltyBalanceCreate(UserLoyaltyBalanceBase):
 
 
 class UserLoyaltyBalanceRead(UserLoyaltyBalanceBase):
+    user_id: int
     id: int
     last_updated: datetime
     created_at: datetime
@@ -44,3 +44,15 @@ class UserLoyaltyBalanceRead(UserLoyaltyBalanceBase):
 
     class Config:
         from_attributes = True
+
+
+class UserLoyaltyBalanceWithProgram(UserLoyaltyBalanceRead):
+    program_name: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class UserLoyaltyBalanceUpsert(BaseModel):
+    program_id: int
+    points_balance: int
