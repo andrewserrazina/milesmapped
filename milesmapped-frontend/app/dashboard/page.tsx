@@ -173,7 +173,10 @@ export default async function DashboardPage() {
                 <p className="text-xs uppercase tracking-[0.2em] text-sky">Balances</p>
                 <h2 className="text-lg font-semibold text-navy">Loyalty balances</h2>
               </div>
-              <Link href="/loyalty" className="text-sm font-semibold text-sky hover:underline">
+              <Link
+                href="/dashboard/loyalty"
+                className="text-sm font-semibold text-sky hover:underline"
+              >
                 Manage balances
               </Link>
             </div>
@@ -261,7 +264,7 @@ export default async function DashboardPage() {
 
 const sidebarLinks = [
   { href: "/dashboard", label: "Overview" },
-  { href: "/loyalty", label: "Loyalty Balances" },
+  { href: "/dashboard/loyalty", label: "Loyalty Balances" },
   { href: "/concierge", label: "Concierge Requests" },
   { href: "/profile", label: "Profile" }
 ];
