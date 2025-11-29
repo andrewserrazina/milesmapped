@@ -38,7 +38,12 @@ def register_user(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
 
     hashed_password = security.get_password_hash(user_in.password)
-    user = User(email=user_in.email, full_name=user_in.full_name, hashed_password=hashed_password)
+    user = User(
+        email=user_in.email,
+        full_name=user_in.full_name,
+        role=user_in.role,
+        hashed_password=hashed_password,
+    )
     db.add(user)
     db.commit()
     db.refresh(user)

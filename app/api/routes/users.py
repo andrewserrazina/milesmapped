@@ -17,7 +17,10 @@ def create_user(user_in: schemas.user.UserCreate, db: Session = Depends(get_db))
 
     hashed_password = security.get_password_hash(user_in.password)
     user = User(
-        email=user_in.email, full_name=user_in.full_name, hashed_password=hashed_password
+        email=user_in.email,
+        full_name=user_in.full_name,
+        role=user_in.role,
+        hashed_password=hashed_password,
     )
     db.add(user)
     db.commit()
