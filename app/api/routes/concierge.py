@@ -6,6 +6,11 @@ from sqlalchemy.orm import Session
 from app import schemas
 from app.api.deps import get_db
 from app.core import auth as core_auth
+from app.core.email import (
+    concierge_request_completed_html,
+    concierge_request_received_html,
+    send_email,
+)
 from app.models.search import ItineraryOption, SearchRequest, SearchStatus
 from app.models.user import User
 
@@ -26,6 +31,12 @@ def create_search_request(
     db.add(search_request)
     db.commit()
     db.refresh(search_request)
+
+    send_email(
+        to_email=current_user.email,
+        subject="We're on it! Concierge request received",
+        html_body=concierge_request_received_html(current_user.full_name, search_request),
+    )
     return search_request
 
 
@@ -95,5 +106,14 @@ def update_search_request_status(
     search_request.status = status_update.status
     db.commit()
     db.refresh(search_request)
+
+    if status_update.status == SearchStatus.COMPLETED:
+        send_email(
+            to_email=search_request.user.email,
+            subject="Your MilesMapped itineraries are ready",
+            html_body=concierge_request_completed_html(
+                search_request.user.full_name, search_request, search_request.itinerary_options
+            ),
+        )
     return search_request
 
