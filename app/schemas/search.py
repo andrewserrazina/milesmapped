@@ -7,7 +7,6 @@ from app.models.search import ItinerarySource, SearchStatus
 
 
 class SearchRequestBase(BaseModel):
-    user_id: int
     origin: str
     destination: str
     departure_date: date
@@ -15,7 +14,6 @@ class SearchRequestBase(BaseModel):
     cabin: Optional[str] = None
     passengers: int
     notes: Optional[str] = None
-    status: SearchStatus = SearchStatus.NEW
 
 
 class SearchRequestCreate(SearchRequestBase):
@@ -24,6 +22,8 @@ class SearchRequestCreate(SearchRequestBase):
 
 class SearchRequestRead(SearchRequestBase):
     id: int
+    user_id: int
+    status: SearchStatus
     created_at: datetime
     updated_at: datetime
 
@@ -31,8 +31,15 @@ class SearchRequestRead(SearchRequestBase):
         from_attributes = True
 
 
+class SearchRequestDetail(SearchRequestRead):
+    itinerary_options: list["ItineraryOptionRead"] = []
+
+
+class SearchRequestStatusUpdate(BaseModel):
+    status: SearchStatus
+
+
 class ItineraryOptionBase(BaseModel):
-    search_request_id: int
     carrier: str
     flight_numbers: str
     departure_time: datetime
@@ -51,8 +58,13 @@ class ItineraryOptionCreate(ItineraryOptionBase):
 
 class ItineraryOptionRead(ItineraryOptionBase):
     id: int
+    search_request_id: int
     created_at: datetime
     updated_at: datetime
 
     class Config:
         from_attributes = True
+
+
+SearchRequestDetail.model_rebuild()
+
