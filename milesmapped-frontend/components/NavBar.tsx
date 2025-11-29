@@ -27,7 +27,7 @@ export function NavBar() {
             </Link>
           ))}
           <Link
-            href="/dashboard"
+            href="/auth/login"
             className="rounded-full bg-navy px-4 py-2 text-white shadow-md shadow-navy/20 transition hover:-translate-y-0.5 hover:bg-navy/90"
           >
             Sign In
