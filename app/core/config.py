@@ -5,6 +5,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     database_url: str
     secret_key: str
+    email_api_key: str | None = None
+    email_from: str = "no-reply@milesmapped.com"
+    dashboard_url: str = "https://app.milesmapped.com/dashboard"
     env: str = "local"
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30

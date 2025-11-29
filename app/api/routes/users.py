@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app import schemas
 from app.api.deps import get_db
+from app.core.email import send_email, welcome_email_html
 from app.core import security
 from app.models.user import User
 
@@ -25,6 +26,8 @@ def create_user(user_in: schemas.user.UserCreate, db: Session = Depends(get_db))
     db.add(user)
     db.commit()
     db.refresh(user)
+
+    send_email(to_email=user.email, subject="Welcome to MilesMapped", html_body=welcome_email_html(user.full_name))
     return user
 
 

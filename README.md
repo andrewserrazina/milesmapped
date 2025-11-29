@@ -30,3 +30,7 @@ A production-ready FastAPI backend skeleton for the MilesMapped service, featuri
 - `app/db/`: SQLAlchemy base and session setup
 - `app/models/`, `app/schemas/`, `app/api/routes/`: Domain models, Pydantic schemas, and API endpoints
 - `migrations/`: Alembic configuration and migration scripts
+
+## Email notifications
+- Set `EMAIL_API_KEY` in your `.env` file with your SendGrid API key to enable outbound emails. If unset, the API will log and skip sending.
+- Optional overrides: `EMAIL_FROM` for the sender address and `DASHBOARD_URL` for links in email templates.
