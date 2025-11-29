@@ -24,6 +24,7 @@ class SearchRequestRead(SearchRequestBase):
     id: int
     user_id: int
     status: SearchStatus
+    admin_notes: Optional[str] = None
     created_at: datetime
     updated_at: datetime
 
@@ -37,6 +38,11 @@ class SearchRequestDetail(SearchRequestRead):
 
 class SearchRequestStatusUpdate(BaseModel):
     status: SearchStatus
+
+
+class SearchRequestAdminUpdate(BaseModel):
+    status: Optional[SearchStatus] = None
+    admin_notes: Optional[str] = None
 
 
 class ItineraryOptionBase(BaseModel):
