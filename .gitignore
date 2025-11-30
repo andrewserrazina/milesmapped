@@ -6,3 +6,6 @@ __pycache__/
 .python-version
 migrations/versions/__pycache__
 .DS_Store
+node_modules/
+milesmapped-frontend/.next/
+milesmapped-frontend/node_modules/
