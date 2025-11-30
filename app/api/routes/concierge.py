@@ -20,8 +20,8 @@ router = APIRouter(prefix="/concierge/requests", tags=["concierge"])
 @router.post("/", response_model=schemas.search.SearchRequestRead, status_code=status.HTTP_201_CREATED)
 def create_search_request(
     search_request_in: schemas.search.SearchRequestCreate,
-    db: Session = Depends(get_db),
     current_user: Annotated[User, Depends(core_auth.get_current_user)],
+    db: Session = Depends(get_db),
 ):
     search_request = SearchRequest(
         **search_request_in.dict(),
@@ -42,9 +42,9 @@ def create_search_request(
 
 @router.get("/", response_model=list[schemas.search.SearchRequestRead])
 def list_search_requests(
+    current_user: Annotated[User, Depends(core_auth.get_current_user)],
     status_filter: SearchStatus | None = Query(default=None, alias="status"),
     db: Session = Depends(get_db),
-    current_user: Annotated[User, Depends(core_auth.get_current_user)],
 ):
     query = db.query(SearchRequest).filter(SearchRequest.user_id == current_user.id)
     if status_filter:
@@ -55,8 +55,8 @@ def list_search_requests(
 @router.get("/{request_id}", response_model=schemas.search.SearchRequestDetail)
 def get_search_request(
     request_id: int,
-    db: Session = Depends(get_db),
     current_user: Annotated[User, Depends(core_auth.get_current_user)],
+    db: Session = Depends(get_db),
 ):
     search_request = db.query(SearchRequest).filter(SearchRequest.id == request_id).first()
     if not search_request:
@@ -74,8 +74,8 @@ def get_search_request(
 def add_itineraries(
     request_id: int,
     itineraries_in: list[schemas.search.ItineraryOptionCreate],
-    db: Session = Depends(get_db),
     current_admin: Annotated[User, Depends(core_auth.get_current_admin)],
+    db: Session = Depends(get_db),
 ):
     search_request = db.query(SearchRequest).filter(SearchRequest.id == request_id).first()
     if not search_request:
@@ -96,8 +96,8 @@ def add_itineraries(
 def update_search_request_status(
     request_id: int,
     status_update: schemas.search.SearchRequestStatusUpdate,
-    db: Session = Depends(get_db),
     current_admin: Annotated[User, Depends(core_auth.get_current_admin)],
+    db: Session = Depends(get_db),
 ):
     search_request = db.query(SearchRequest).filter(SearchRequest.id == request_id).first()
     if not search_request:

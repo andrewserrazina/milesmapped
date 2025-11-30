@@ -14,16 +14,16 @@ router = APIRouter(prefix="/loyalty", tags=["loyalty"])
 
 @router.get("/programs", response_model=list[schemas.loyalty.LoyaltyProgramRead])
 def list_loyalty_programs(
-    db: Session = Depends(get_db),
     current_user: Annotated[User, Depends(core_auth.get_current_user)],
+    db: Session = Depends(get_db),
 ):
     return db.query(LoyaltyProgram).order_by(LoyaltyProgram.name.asc()).all()
 
 
 @router.get("/balances", response_model=list[schemas.loyalty.UserLoyaltyBalanceWithProgram])
 def list_loyalty_balances(
-    db: Session = Depends(get_db),
     current_user: Annotated[User, Depends(core_auth.get_current_user)],
+    db: Session = Depends(get_db),
 ):
     balances = (
         db.query(UserLoyaltyBalance)
@@ -47,8 +47,8 @@ def list_loyalty_balances(
 )
 def upsert_loyalty_balance(
     balance_in: schemas.loyalty.UserLoyaltyBalanceUpsert,
-    db: Session = Depends(get_db),
     current_user: Annotated[User, Depends(core_auth.get_current_user)],
+    db: Session = Depends(get_db),
 ):
     program = (
         db.query(LoyaltyProgram)

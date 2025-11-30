@@ -1,6 +1,9 @@
 from datetime import date, datetime
 from typing import Annotated
 
+from datetime import date, datetime
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session, joinedload
 
@@ -15,12 +18,12 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 
 @router.get("/search-requests", response_model=list[schemas.search.SearchRequestRead])
 def list_search_requests(
+    _: Annotated[User, Depends(core_auth.get_current_admin)],
     status_filter: SearchStatus | None = Query(default=None, alias="status"),
     start_date: date | None = Query(default=None),
     end_date: date | None = Query(default=None),
     user_email: str | None = Query(default=None),
     db: Session = Depends(get_db),
-    _: Annotated[User, Depends(core_auth.get_current_admin)],
 ):
     query = db.query(SearchRequest).join(User)
 
@@ -46,8 +49,8 @@ def list_search_requests(
 )
 def get_search_request_detail(
     request_id: int,
-    db: Session = Depends(get_db),
     _: Annotated[User, Depends(core_auth.get_current_admin)],
+    db: Session = Depends(get_db),
 ):
     search_request = (
         db.query(SearchRequest)
@@ -67,8 +70,8 @@ def get_search_request_detail(
 def update_search_request(
     request_id: int,
     search_request_update: schemas.search.SearchRequestAdminUpdate,
-    db: Session = Depends(get_db),
     _: Annotated[User, Depends(core_auth.get_current_admin)],
+    db: Session = Depends(get_db),
 ):
     search_request = db.query(SearchRequest).filter(SearchRequest.id == request_id).first()
     if not search_request:
