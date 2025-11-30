@@ -30,6 +30,14 @@ A production-ready FastAPI backend skeleton for the MilesMapped service, featuri
 - `app/db/`: SQLAlchemy base and session setup
 - `app/models/`, `app/schemas/`, `app/api/routes/`: Domain models, Pydantic schemas, and API endpoints
 - `migrations/`: Alembic configuration and migration scripts
+- `milesmapped-frontend/`: Next.js frontend (used for Vercel deployments)
+
+## Frontend deployment on Vercel
+- The repository root does not contain a `package.json`, so Vercel must run install/build commands from the `milesmapped-frontend` directory.
+- `vercel.json` is configured to:
+  - Install dependencies with `cd milesmapped-frontend && npm install`
+  - Build the app with `cd milesmapped-frontend && npm run build`
+  - Publish the generated `.next` output from `milesmapped-frontend/.next`
 
 ## Email notifications
 - Set `EMAIL_API_KEY` in your `.env` file with your SendGrid API key to enable outbound emails. If unset, the API will log and skip sending.
