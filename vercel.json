@@ -2,6 +2,9 @@
   "builds": [
     { "src": "milesmapped-frontend/package.json", "use": "@vercel/next" }
   ],
-  "installCommand": "npm install",
-  "buildCommand": "npm run build --workspace milesmapped-frontend"
+  "installCommand": "cd milesmapped-frontend && npm install",
+  "buildCommand": "cd milesmapped-frontend && npm run build",
+  "routes": [
+    { "src": "/(.*)", "dest": "/milesmapped-frontend/$1" }
+  ]
 }
