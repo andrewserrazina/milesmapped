@@ -2,6 +2,6 @@
   "builds": [
     { "src": "milesmapped-frontend/package.json", "use": "@vercel/next" }
   ],
-  "installCommand": "npm install --prefix milesmapped-frontend",
-  "buildCommand": "npm run build --prefix milesmapped-frontend"
+  "installCommand": "npm install",
+  "buildCommand": "npm run build --workspace milesmapped-frontend"
 }
