@@ -1,0 +1,6 @@
+{
+  "installCommand": "cd milesmapped-frontend && npm install",
+  "buildCommand": "cd milesmapped-frontend && npm run build",
+  "outputDirectory": "milesmapped-frontend/.next",
+  "framework": "nextjs"
+}
