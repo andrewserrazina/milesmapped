@@ -1,6 +1,7 @@
 {
-  "installCommand": "cd milesmapped-frontend && npm install",
-  "buildCommand": "cd milesmapped-frontend && npm run build",
-  "outputDirectory": "milesmapped-frontend/.next",
-  "framework": "nextjs"
+  "builds": [
+    { "src": "milesmapped-frontend/package.json", "use": "@vercel/next" }
+  ],
+  "installCommand": "npm install --prefix milesmapped-frontend",
+  "buildCommand": "npm run build --prefix milesmapped-frontend"
 }
